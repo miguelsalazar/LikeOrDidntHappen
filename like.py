@@ -1,5 +1,5 @@
 #!/usr/bin/python
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 import io
 import json
 import sys
@@ -33,22 +33,23 @@ class TumblrListener(Thread):
     
     def __init__(self):
         Thread.__init__(self)
-        consumer_key = '08rMqbhTHyPqXGHSwTQWXaBhgjojRtQktJf4uHTbr4IYD90YOy'
-        consumer_secret = 'UI0Dh6v5zCILf3KhFEJny4Dcj2Ol191x2oMg0TlNLge0CzgFhY'
-        oauth_token = 'DcPeq6ZtmwzQwXHxTKebVZJhML4Zfv0H1cOi9Yw7AXRTLpMqGt'
-        oauth_secret = 'CUIHItHRGpA6TAkxNxXtCyNIbFgwM3TagyAJulfQ0Vc6grgJrU'
         self.gpio_port = GPIOPort()
-        self.client = pytumblr.TumblrRestClient(consumer_key, consumer_secret, oauth_token, oauth_secret)
-        self.previous_tumblr_followers = self.client.followers('likeordidnthappen')['total_users']
-        print 'Initial followers on Tumblr: ', self.previous_tumblr_followers
         pass
 
     def run(self):
+        tumblr_consumer_key = '08rMqbhTHyPqXGHSwTQWXaBhgjojRtQktJf4uHTbr4IYD90YOy'
+        tumblr_consumer_secret = 'UI0Dh6v5zCILf3KhFEJny4Dcj2Ol191x2oMg0TlNLge0CzgFhY'
+        tumblr_oauth_token = 'DcPeq6ZtmwzQwXHxTKebVZJhML4Zfv0H1cOi9Yw7AXRTLpMqGt'
+        tumblr_oauth_secret = 'CUIHItHRGpA6TAkxNxXtCyNIbFgwM3TagyAJulfQ0Vc6grgJrU'
+        client = pytumblr.TumblrRestClient(tumblr_consumer_key, tumblr_consumer_secret, tumblr_oauth_token, tumblr_oauth_secret)
+        previous_tumblr_followers = client.followers('likeordidnthappen')['total_users']
+
+        print 'Initial followers on Tumblr: ', previous_tumblr_followers
         while True:
-            current_tumblr_followers = self.client.followers('likeordidnthappen')['total_users']
-            if current_tumblr_followers > self.previous_tumblr_followers:
+            current_tumblr_followers = client.followers('likeordidnthappen')['total_users']
+            if current_tumblr_followers > previous_tumblr_followers:
                 print 'A person has just followed the Tumblr blog!', current_tumblr_followers
-                self.previous_tumblr_followers = current_tumblr_followers
+                previous_tumblr_followers = current_tumblr_followers
                 self.gpio_port.blink()
             else:
                 print('Tumblr followers: ',current_tumblr_followers,'. There are no new followers.')
@@ -75,7 +76,7 @@ class FacebookListener(Thread):
                 previous_fb_likes = current_fb_likes
                 self.gpio_port.blink()
             else:
-                print('Facebook likes: ',current_fb_likes,'. No new likes on Facebook.')
+                print 'Facebook likes: ',current_fb_likes,'. No new likes on Facebook.'
             sleep(1.1)
 
 
