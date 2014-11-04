@@ -124,6 +124,7 @@ if __name__ == '__main__':
         stream.filter(track=['likeordidnthappen'])
     except(KeyboardInterrupt, SystemExit):
         print 'Interrupted by user. Quitting...'
+        GPIO.cleanup()
         exit(1)
 
-    print('Main terminating')
+    print 'Main terminating'
