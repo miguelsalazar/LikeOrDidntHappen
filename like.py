@@ -1,5 +1,5 @@
 #!/usr/bin/python
-#import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import io
 import json
 import sys
@@ -15,17 +15,16 @@ consumer_secret = 'XGYGTU5CYlh6ObaotzRIZywOyGvn8xXBB2tsrvuZ6pU'
 access_token = '1857778609-G1o40hMrTEc9u4jOyLsDVr9mKrxSJXLAenmne5E'
 access_token_secret = 'olmHCWTMvEXdbNIgeXNaaQrwue6bBLPbfe3I3bckA'
 
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(15,GPIO.OUT)
 
 class GPIOPort():
-    
-    def __init__(self):
-        pass
 
     def blink(self):
         print "Blink"
-        GPIO.output(22,GPIO.HIGH) # Outputs through GPIO Pin 22
+        GPIO.output(15,GPIO.HIGH) # Outputs through GPIO Pin 22
         time.sleep(1)
-        GPIO.output(22,GPIO.LOW)
+        GPIO.output(15,GPIO.LOW)
         return True
 
 
@@ -52,7 +51,7 @@ class TumblrListener(Thread):
                 previous_tumblr_followers = current_tumblr_followers
                 self.gpio_port.blink()
             else:
-                print('Tumblr followers: ',current_tumblr_followers,'. There are no new followers.')
+                print 'Tumblr followers: ',current_tumblr_followers,'. There are no new followers.'
             time.sleep(10)
 
 
