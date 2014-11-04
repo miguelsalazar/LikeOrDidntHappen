@@ -63,7 +63,7 @@ class FacebookListener(Thread):
         pass
 
     def run(self):
-        graph = facebook.GraphAPI('CAACEdEose0cBAN8HInI5nKsqNLKoXYy1EUrqOLepClnVIZBCtnqUcHaydq67j8QyGN4JOaJIKBIaxSZCyiOya1VNMp5QnoTbkJbTXwrRZBn1ua9rZBsOM1lZCzpRdSAfZCbLIgaklRyZCq4j96gBS6FAerZCzBwq3hMfnRWkfCLnL0Yu6EqsGBGB3gQFRi0MUnimeHZCa62XVSoZBiA8p1yv1byA7mlAVLBKMZD')
+        graph = facebook.GraphAPI('CAAUZAeC7fPDgBAEquwHQAxgDjtO4g57xzUAxuZBT8QKwuCEjYCJIkS65ndwFKfOEAZCQqjTDICNJfafTYGpEMcjmMYEf59i8REUbIrSn60WTo5epyzEj77ToNoSpiN1ExdSfly6ZBm6dPZCZBNi9JEdujzZC89zlZCYvzFlHoLCNOeOS29PBy6BUx5u7nD5eZAX5EqgXep9cOMcx2iPKtuAo7')
         previous_fb_likes = graph.get_object('345921298869077')['likes']
         print 'Initial likes on Facebook: ', previous_fb_likes
 
